@@ -19,7 +19,7 @@ def setup():
 
     quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
                    './_data/DogQuotes/DogQuotesDOCX.docx',
-                   #'./_data/DogQuotes/DogQuotesPDF.pdf',
+                   './_data/DogQuotes/DogQuotesPDF.pdf',
                    './_data/DogQuotes/DogQuotesCSV.csv']
 
     #quote_files = [ './_data/DogQuotes/DogQuotesCSV.csv']
@@ -75,8 +75,14 @@ def meme_post():
     #    file and the body and author form paramaters.
     # 3. Remove the temporary saved image.
 
-    path = None
-
+    image_url = request.args.get('image_url')
+    r = requests.get(image_url, allow_redirects=True)
+    path = f'./tmp/{random.randint(0, 100000000)}.png'
+    open(path, 'wb').write(r.content)
+    body = request.args.get('body')
+    author = request.args.get('author')
+    path = meme.make_meme(path, body, author)
+    os.remove(path)
     return render_template('meme.html', path=path)
 
 
