@@ -5,6 +5,9 @@ from .PDFImporter import PDFImporter
 from .TxtImporter import TXTImporter
 from typing import List
 from .QuoteModel import QuoteModel
+"""
+This is the Ingestor class that choses different Importers
+"""
 class Ingestor:
 
     ingestors = [CSVImporter, DocxImporter, PDFImporter, TXTImporter]

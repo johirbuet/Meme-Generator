@@ -1,5 +1,7 @@
 
-
+"""
+This is the class that defines the quote model.
+"""
 class QuoteModel:
     def __init__(self, author, body):
         self.author = author

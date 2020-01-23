@@ -5,7 +5,9 @@ import random
 from typing import List
 from .QuoteModel import QuoteModel
 
-
+"""
+This class is responsible for importing PDF files and returning the quotes from the pdf file
+"""
 class PDFImporter(IngestorInterface):
     allowed_extensions = ["pdf"]
 

@@ -3,6 +3,10 @@ from .IngestorInterface import IngestorInterface
 from typing import List
 from .QuoteModel import QuoteModel
 
+"""
+This file is responsible for reading txt files and returning quotes from txt file
+"""
+
 class TXTImporter(IngestorInterface):
     allowed_extensions = ["txt"]
 
