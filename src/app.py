@@ -5,6 +5,10 @@ from flask import Flask, render_template, abort, request
 
 # @TODO Import your Ingestor and MemeEngine classes
 
+from QuoteEngine.Ingestor import Ingestor
+from MemeEngine.MemeEngine import MemeEngine
+from QuoteEngine.QuoteModel import QuoteModel
+
 app = Flask(__name__)
 
 meme = MemeEngine('./static')
@@ -15,18 +19,24 @@ def setup():
 
     quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
                    './_data/DogQuotes/DogQuotesDOCX.docx',
-                   './_data/DogQuotes/DogQuotesPDF.pdf',
+                   #'./_data/DogQuotes/DogQuotesPDF.pdf',
                    './_data/DogQuotes/DogQuotesCSV.csv']
+
+    #quote_files = [ './_data/DogQuotes/DogQuotesCSV.csv']
 
     # TODO: Use the Ingestor class to parse all files in the
     # quote_files variable
-    quotes = None
+    quotes = []
+    for f in quote_files:
+        quotes.extend(Ingestor.parse(f))
 
     images_path = "./_data/photos/dog/"
 
     # TODO: Use the pythons standard library os class to find all
     # images within the images images_path directory
-    imgs = None
+    imgs = []
+    for root, dirs, files in os.walk(images_path):
+        imgs = [os.path.join(root, name) for name in files]
 
     return quotes, imgs
 
@@ -42,9 +52,8 @@ def meme_rand():
     # Use the random python standard library class to:
     # 1. select a random image from imgs array
     # 2. select a random quote from the quotes array
-
-    img = None
-    quote = None
+    img = random.choice(imgs)
+    quote = random.choice(quotes)
     path = meme.make_meme(img, quote.body, quote.author)
     return render_template('meme.html', path=path)
 
